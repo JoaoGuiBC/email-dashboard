@@ -9,6 +9,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
+import { CreateCategoryDialog } from './create-category-dialog'
+import { CreateContactDialog } from './create-contact-dialog'
+
 export function ContactsSectionHeader() {
   return (
     <div className="mb-2 flex items-center">
@@ -18,28 +21,18 @@ export function ContactsSectionHeader() {
         <PopoverTrigger asChild>
           <Button variant="outline" size="sm" className="ml-auto mr-2 px-2">
             <PlusCircledIcon className="size-4" />
-
-            <PopoverContent className="flex flex-col items-center">
-              <span>O que você deseja criar?</span>
-
-              <div className="mt-2 flex w-full justify-evenly">
-                <Button
-                  variant="outline"
-                  onClick={() => console.log('Categoria')}
-                >
-                  Categoria
-                </Button>
-
-                <Button
-                  variant="outline"
-                  onClick={() => console.log('contato')}
-                >
-                  Contato
-                </Button>
-              </div>
-            </PopoverContent>
           </Button>
         </PopoverTrigger>
+
+        <PopoverContent className="flex flex-col items-center">
+          <span>O que você deseja criar?</span>
+
+          <div className="mt-2 flex w-full justify-evenly">
+            <CreateCategoryDialog />
+
+            <CreateContactDialog />
+          </div>
+        </PopoverContent>
       </Popover>
 
       <Button variant="destructive" size="sm">
