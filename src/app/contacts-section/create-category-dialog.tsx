@@ -3,6 +3,7 @@
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useActionState, useEffect } from 'react'
 import { toast } from 'sonner'
+import { useSWRConfig } from 'swr'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -16,9 +17,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ActionReturn, RETURN_TYPES } from '@/utils/actions-return-type'
 
-import createCategory from './actions'
+import { createCategory } from './actions'
 
 export function CreateCategoryDialog() {
+  const { mutate } = useSWRConfig()
+
   const [{ errors, type, message }, formAction, isPending] = useActionState(
     createCategory,
     {} as ActionReturn,
@@ -31,17 +34,16 @@ export function CreateCategoryDialog() {
       }
 
       if (type === RETURN_TYPES.SUCCESS) {
+        mutate('/category')
         toast.success(message)
       }
     }
-  }, [type, message, isPending])
+  }, [type, message, isPending, mutate])
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => console.log('categoria')}>
-          Categoria
-        </Button>
+        <Button variant="outline">Categoria</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -16,8 +16,8 @@ export default function Home() {
 
       <main className="row-span-9 grid grid-cols-7 grid-rows-1 gap-4">
         <Contacts />
-        <section className="col-span-3 bg-indigo-800">middle</section>
-        <section className="col-span-2 bg-blue-800">right</section>
+        <section className="col-span-3">middle</section>
+        <section className="col-span-2">right</section>
       </main>
     </div>
   )

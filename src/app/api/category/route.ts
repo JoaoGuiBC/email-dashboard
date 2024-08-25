@@ -9,6 +9,15 @@ const createCategorySchema = z.object({
     .min(4, { message: 'Informe o nome da categoria' }),
 })
 
+export async function GET() {
+  const categories = await prisma.contactCategory.findMany({
+    select: { id: true, name: true },
+    orderBy: { name: 'asc' },
+  })
+
+  return Response.json(categories)
+}
+
 export async function POST(request: Request) {
   const response = await request.json()
 
