@@ -11,8 +11,42 @@ const createContactSchema = z.object({
     .string({ message: 'Informe o nome do contato' })
     .min(4, { message: 'Informe o nome do contato' }),
   phone: z.coerce.string({ message: 'Tel. inválido' }).optional(),
-  categoryId: z.string({ message: 'Categoria inválida' }).optional(),
+  categoryId: z
+    .string({ message: 'Categoria inválida' })
+    .optional()
+    .transform((val) => (val?.length === 0 ? undefined : val)),
 })
+
+export async function GET() {
+  const categories = await prisma.contactCategory.findMany({
+    select: {
+      id: true,
+      name: true,
+      contacts: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+        orderBy: { name: 'asc' },
+      },
+    },
+    orderBy: { name: 'asc' },
+  })
+  const contacts = await prisma.contact.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+    },
+    where: { categoryId: null },
+    orderBy: { name: 'asc' },
+  })
+
+  return Response.json({ categories, contacts })
+}
 
 export async function POST(request: Request) {
   const response = await request.json()

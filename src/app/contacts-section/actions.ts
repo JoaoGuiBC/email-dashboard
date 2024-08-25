@@ -20,7 +20,7 @@ const createContactSchema = z.object({
   name: z
     .string({ message: 'Informe o nome do contato' })
     .min(4, { message: 'Informe o nome do contato' }),
-  phone: z.coerce.number({ message: 'Tel. inválido' }).optional(),
+  phone: z.string({ message: 'Tel. inválido' }).optional(),
   category: z
     .string({ message: 'Categoria inválida' })
     .transform((val) => (val === 'none' ? undefined : val)),
