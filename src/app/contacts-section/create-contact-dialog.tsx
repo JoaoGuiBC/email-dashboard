@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -56,6 +57,9 @@ export function CreateContactDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Adicionar um novo contato</DialogTitle>
+          <DialogDescription className="sr-only">
+            Formulário para criar um novo contato
+          </DialogDescription>
         </DialogHeader>
 
         <form

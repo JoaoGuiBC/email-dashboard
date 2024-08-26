@@ -6,11 +6,10 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST() {
   const { data, error } = await resend.emails.send({
-    from: 'Teste <onboarding@resend.dev>',
-    to: ['joaoguibc@gmail.com'],
+    from: 'Teste <test@joaoguibc.cloud>',
+    to: ['joaoguibc@gmail.com', 'joaoguibc30@gmail.com'],
     subject: 'testando mais!',
     react: EmailTemplate({ firstName: 'John' }),
-    reply_to: ['joaoguibc30@gmail.com'],
   })
 
   if (error) {

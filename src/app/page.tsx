@@ -1,8 +1,7 @@
 import '../env'
 
-import { Button } from '@/components/ui/button'
-
 import { Contacts } from './contacts-section'
+import { SendEmailMenu } from './send-email-menu'
 
 export default function Home() {
   return (
@@ -11,7 +10,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold tracking-tighter">
           E-mail dashboard
         </h1>
-        <Button>Enviar novo e-mail</Button>
+        <SendEmailMenu />
       </header>
 
       <main className="row-span-9 grid grid-cols-7 grid-rows-1 gap-4">

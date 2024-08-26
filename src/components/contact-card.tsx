@@ -8,9 +8,15 @@ interface ContactCardProps {
   name: string
   email: string
   phone: string | null
+  editable: boolean
 }
 
-export function ContactCard({ name, email, phone }: ContactCardProps) {
+export function ContactCard({
+  name,
+  email,
+  phone,
+  editable,
+}: ContactCardProps) {
   return (
     <div className="flex justify-between rounded-md bg-zinc-900 p-4">
       <div>
@@ -23,9 +29,12 @@ export function ContactCard({ name, email, phone }: ContactCardProps) {
 
       <div className="flex flex-col items-end gap-1">
         <Checkbox className="mr-0.5" />
-        <Button variant="ghost" className="h-fit p-1">
-          <Pencil1Icon />
-        </Button>
+
+        {editable && (
+          <Button variant="ghost" className="h-fit p-1">
+            <Pencil1Icon />
+          </Button>
+        )}
       </div>
     </div>
   )

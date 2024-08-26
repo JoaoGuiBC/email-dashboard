@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -49,6 +50,9 @@ export function CreateCategoryDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Adicionar uma nova categoria</DialogTitle>
+          <DialogDescription className="sr-only">
+            Formulário para criar uma nova categoria nos contatos
+          </DialogDescription>
         </DialogHeader>
 
         <form
