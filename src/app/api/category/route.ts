@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
@@ -24,7 +23,7 @@ export async function POST(request: Request) {
   const { success, data } = createCategorySchema.safeParse(response)
 
   if (!success) {
-    return NextResponse.json(
+    return Response.json(
       { message: 'Erro nos campos do formulário' },
       { status: 400 },
     )
@@ -34,6 +33,6 @@ export async function POST(request: Request) {
 
   return Response.json(
     { message: 'Categoria criada com sucesso!' },
-    { status: 200 },
+    { status: 201 },
   )
 }

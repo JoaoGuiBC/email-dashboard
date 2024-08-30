@@ -36,7 +36,6 @@ export function CreateCategoryDialog() {
 
       if (type === RETURN_TYPES.SUCCESS) {
         mutate('/category')
-        mutate('/contact')
         toast.success(message)
       }
     }

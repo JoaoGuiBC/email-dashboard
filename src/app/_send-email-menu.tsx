@@ -1,5 +1,3 @@
-'use client'
-
 import { ContactsList } from '@/components/contacts-list'
 import { Button } from '@/components/ui/button'
 import {
@@ -15,8 +13,9 @@ import {
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-export function SendEmailMenu() {
-  function sendEmail(data: FormData) {
+export async function SendEmailMenu() {
+  async function sendEmail(data: FormData) {
+    'use server'
     console.log(data.get('message'))
   }
   return (

@@ -5,6 +5,7 @@ import { Checkbox } from './ui/checkbox'
 import { Skeleton } from './ui/skeleton'
 
 interface ContactCardProps {
+  id: string
   name: string
   email: string
   phone: string | null
@@ -12,6 +13,7 @@ interface ContactCardProps {
 }
 
 export function ContactCard({
+  id,
   name,
   email,
   phone,
@@ -28,7 +30,7 @@ export function ContactCard({
       </div>
 
       <div className="flex flex-col items-end gap-1">
-        <Checkbox className="mr-0.5" />
+        <Checkbox id={id} name={id} className="mr-0.5" />
 
         {editable && (
           <Button variant="ghost" className="h-fit p-1">

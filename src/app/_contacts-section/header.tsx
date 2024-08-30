@@ -1,5 +1,3 @@
-'use client'
-
 import { PlusCircledIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/ui/button'
@@ -12,7 +10,7 @@ import {
 import { CreateCategoryDialog } from './create-category-dialog'
 import { CreateContactDialog } from './create-contact-dialog'
 
-export function ContactsSectionHeader() {
+export async function ContactsSectionHeader() {
   return (
     <div className="mb-2 flex items-center">
       <h2 className="text-xl">Contatos salvos</h2>
@@ -35,7 +33,12 @@ export function ContactsSectionHeader() {
         </PopoverContent>
       </Popover>
 
-      <Button variant="destructive" size="sm">
+      <Button
+        form="deleteContact"
+        type="submit"
+        variant="destructive"
+        size="sm"
+      >
         Apagar selecionados
       </Button>
     </div>

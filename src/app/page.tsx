@@ -1,7 +1,7 @@
 import '../env'
 
-import { Contacts } from './contacts-section'
-import { SendEmailMenu } from './send-email-menu'
+import { Contacts } from './_contacts-section'
+import { SendEmailMenu } from './_send-email-menu'
 
 export default function Home() {
   return (

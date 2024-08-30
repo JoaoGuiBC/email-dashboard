@@ -3,7 +3,6 @@
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useActionState, useEffect } from 'react'
 import { toast } from 'sonner'
-import { useSWRConfig } from 'swr'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -30,7 +29,6 @@ import { createContact } from './actions'
 
 export function CreateContactDialog() {
   const { categories } = useCategories()
-  const { mutate } = useSWRConfig()
   const [{ errors, type, message }, formAction, isPending] = useActionState(
     createContact,
     {} as ActionReturn,
@@ -43,11 +41,10 @@ export function CreateContactDialog() {
       }
 
       if (type === RETURN_TYPES.SUCCESS) {
-        mutate('/contact')
         toast.success(message)
       }
     }
-  }, [type, message, isPending, mutate])
+  }, [type, message, isPending])
 
   return (
     <Dialog>

@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 
 import { api } from '@/http/api'
@@ -62,6 +63,8 @@ export async function createContact(
       })
       .json<CreateContactResponse>()
 
+    revalidateTag('contacts')
+
     return { type: RETURN_TYPES.SUCCESS, message }
   } catch (error) {
     const { message }: { message: string } = await new Response(
@@ -92,6 +95,8 @@ export async function createCategory(
       .post('category', { json: { name: validatedFields.data.name } })
       .json<CreateCategoryResponse>()
 
+    revalidateTag('category')
+
     return { type: RETURN_TYPES.SUCCESS, message }
   } catch (error) {
     const { message }: { message: string } = await new Response(
@@ -100,4 +105,15 @@ export async function createCategory(
 
     return { type: RETURN_TYPES.SERVER_ERROR, message }
   }
+}
+
+export async function deleteContact(data: FormData) {
+  const [...formKeys] = data.keys()
+  const contactsId = formKeys.filter((value) => !value.startsWith('$ACTION_ID'))
+
+  if (contactsId.length === 0) return
+
+  await api.delete('contact', { json: { contactsId } })
+
+  revalidateTag('contacts')
 }

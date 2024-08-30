@@ -17,6 +17,10 @@ const createContactSchema = z.object({
     .transform((val) => (val?.length === 0 ? undefined : val)),
 })
 
+const deleteContactSchema = z.object({
+  contactsId: z.array(z.string()),
+})
+
 export async function GET() {
   const categories = await prisma.contactCategory.findMany({
     select: {
@@ -71,6 +75,19 @@ export async function POST(request: Request) {
 
   return Response.json(
     { message: 'Contato criado com sucesso!' },
+    { status: 201 },
+  )
+}
+
+export async function DELETE(request: Request) {
+  const response = await request.json()
+
+  const { contactsId } = deleteContactSchema.parse(response)
+
+  await prisma.contact.deleteMany({ where: { id: { in: contactsId } } })
+
+  return Response.json(
+    { message: 'Contato apagado com sucesso!' },
     { status: 200 },
   )
 }
