@@ -113,9 +113,7 @@ export async function deleteContact(data: FormData) {
 
   if (contactsId.length === 0) return
 
-  // await api.delete('contact', { json: { contactsId } })
+  await api.delete('contact', { json: { contactsId } })
 
-  console.log({ json: { contactsId } })
-
-  // revalidateTag('contacts')
+  revalidateTag('contacts')
 }

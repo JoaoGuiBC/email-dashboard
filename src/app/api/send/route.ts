@@ -1,20 +1,42 @@
 import { Resend } from 'resend'
+import { z } from 'zod'
 
 import { EmailTemplate } from '@/components/email-template'
+import { env } from '@/env'
+import { prisma } from '@/lib/prisma'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function POST() {
-  const { data, error } = await resend.emails.send({
-    from: 'Teste <test@joaoguibc.cloud>',
-    to: ['joaoguibc@gmail.com', 'joaoguibc30@gmail.com'],
+const sendEmailSchema = z.object({
+  message: z.string(),
+  contactsId: z.array(z.string()),
+})
+
+export async function POST(request: Request) {
+  const response = await request.json()
+
+  const { message, contactsId } = sendEmailSchema.parse(response)
+
+  const contacts = await prisma.contact.findMany({
+    where: { id: { in: contactsId } },
+    select: { email: true },
+  })
+
+  const emails = contacts.map((contact) => contact.email)
+
+  const { error } = await resend.emails.send({
+    from: `E-mail tester <${env.EMAIL_SENDER}>`,
+    to: emails,
     subject: 'testando mais!',
-    react: EmailTemplate({ firstName: 'John' }),
+    react: EmailTemplate({ message }),
   })
 
   if (error) {
     return Response.json(error, { status: 400 })
   }
 
-  return Response.json(data, { status: 200 })
+  return Response.json(
+    { message: 'E-mail enviado com sucesso' },
+    { status: 200 },
+  )
 }
