@@ -1,4 +1,4 @@
-import { CaretSortIcon, TrashIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon } from '@radix-ui/react-icons'
 import React, { Fragment } from 'react'
 
 import { ContactCard } from '@/components/contact-card'
@@ -11,6 +11,8 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { api } from '@/http/api'
+
+import { DeleteCategoryButton } from './delete-category-button'
 
 type Contact = {
   email: string
@@ -46,16 +48,14 @@ export async function ContactsList({ allowEdit = true }: ContactsListProps) {
   const data = await listContacts()
 
   return (
-    <ScrollArea>
+    <ScrollArea className="h-full">
       {data.categories.map((category) => (
         <Fragment key={category.id}>
           <Collapsible className="pb-2">
             <div className="mb-2 ml-4 flex items-center gap-2">
-              <h3 className="font-light">{category.name}</h3>
+              <h3 className="mr-auto font-light">{category.name}</h3>
 
-              <Button variant="outline" size="icon" className="ml-auto">
-                <TrashIcon className="h-4 w-4" />
-              </Button>
+              {allowEdit && <DeleteCategoryButton categoryId={category.id} />}
 
               <CollapsibleTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -83,7 +83,7 @@ export async function ContactsList({ allowEdit = true }: ContactsListProps) {
             </CollapsibleContent>
           </Collapsible>
 
-          <Separator className="mx-auto mb-4 w-10/12 bg-zinc-500" />
+          <Separator className="mx-auto mb-6 w-10/12 bg-zinc-500" />
         </Fragment>
       ))}
 

@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
@@ -6,6 +7,10 @@ const createCategorySchema = z.object({
   name: z
     .string({ message: 'Informe o nome da categoria' })
     .min(4, { message: 'Informe o nome da categoria' }),
+})
+
+const deleteCategorySchema = z.object({
+  categoryId: z.string(),
 })
 
 export async function GET() {
@@ -34,5 +39,20 @@ export async function POST(request: Request) {
   return Response.json(
     { message: 'Categoria criada com sucesso!' },
     { status: 201 },
+  )
+}
+
+export async function DELETE(request: Request) {
+  const response = await request.json()
+
+  const { categoryId } = deleteCategorySchema.parse(response)
+
+  await prisma.contactCategory.delete({ where: { id: categoryId } })
+
+  revalidateTag('category')
+
+  return Response.json(
+    { message: 'Categoria apagada com sucesso!' },
+    { status: 200 },
   )
 }

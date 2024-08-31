@@ -12,7 +12,7 @@ import { CreateContactDialog } from './create-contact-dialog'
 
 export async function ContactsSectionHeader() {
   return (
-    <div className="mb-2 flex items-center">
+    <div className="flex items-center self-start">
       <h2 className="text-xl">Contatos salvos</h2>
 
       <Popover>
