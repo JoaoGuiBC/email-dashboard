@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -8,12 +9,20 @@ import { cn } from '@/lib/utils'
 const Drawer = ({
   shouldScaleBackground = true,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
-  <DrawerPrimitive.Root
-    shouldScaleBackground={shouldScaleBackground}
-    {...props}
-  />
-)
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => {
+  const router = useRouter()
+
+  function onDismiss(closed: boolean) {
+    if (!closed) router.back()
+  }
+  return (
+    <DrawerPrimitive.Root
+      onOpenChange={(closed) => onDismiss(closed)}
+      shouldScaleBackground={shouldScaleBackground}
+      {...props}
+    />
+  )
+}
 Drawer.displayName = 'Drawer'
 
 const DrawerTrigger = DrawerPrimitive.Trigger

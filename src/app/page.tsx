@@ -1,7 +1,8 @@
-import '../env'
+import Link from 'next/link'
+
+import { Button } from '@/components/ui/button'
 
 import { Contacts } from './_contacts-section'
-import { SendEmailMenu } from './_send-email-menu'
 
 export default function Home() {
   return (
@@ -10,7 +11,10 @@ export default function Home() {
         <h1 className="text-2xl font-bold tracking-tighter">
           E-mail dashboard
         </h1>
-        <SendEmailMenu />
+
+        <Button asChild>
+          <Link href="/send-email">Enviar novo e-mail</Link>
+        </Button>
       </header>
 
       <main className="row-span-9 grid grid-cols-7 grid-rows-1 gap-4">

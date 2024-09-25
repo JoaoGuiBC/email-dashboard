@@ -13,14 +13,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode
+  modal: React.ReactNode
 }>) {
   return (
     <html lang="pt">
       <body className={inter.className}>
         <Toaster richColors />
         {children}
+        {modal}
       </body>
     </html>
   )

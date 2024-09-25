@@ -1,13 +1,14 @@
 interface EmailTemplateProps {
+  title: string
   message: string
 }
 
-export function EmailTemplate({ message }: EmailTemplateProps) {
+export function EmailTemplate({ title, message }: EmailTemplateProps) {
   return (
     <div>
-      <h1>Welcome!</h1>
+      <h1>{title}</h1>
 
-      <span style={{ fontSize: '0.75rem', color: '#3f3f46' }}>{message}</span>
+      <span style={{ fontSize: '1rem', color: '#3f3f46' }}>{message}</span>
     </div>
   )
 }

@@ -8,6 +8,8 @@ import { prisma } from '@/lib/prisma'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const sendEmailSchema = z.object({
+  subject: z.string(),
+  title: z.string(),
   message: z.string(),
   contactsId: z.array(z.string()),
 })
@@ -15,7 +17,8 @@ const sendEmailSchema = z.object({
 export async function POST(request: Request) {
   const response = await request.json()
 
-  const { message, contactsId } = sendEmailSchema.parse(response)
+  const { subject, title, message, contactsId } =
+    sendEmailSchema.parse(response)
 
   const contacts = await prisma.contact.findMany({
     where: { id: { in: contactsId } },
@@ -25,10 +28,10 @@ export async function POST(request: Request) {
   const emails = contacts.map((contact) => contact.email)
 
   const { error } = await resend.emails.send({
-    from: `E-mail tester <${env.EMAIL_SENDER}>`,
+    from: `E-mail Dashboard <${env.EMAIL_SENDER}>`,
     to: emails,
-    subject: 'testando mais!',
-    react: EmailTemplate({ message }),
+    subject,
+    react: EmailTemplate({ title, message }),
   })
 
   if (error) {
