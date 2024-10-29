@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { mutate } from 'swr'
 
 import { CreateEmailForm } from '@/app/send-email/_create-email-form'
 import { api } from '@/http/api'
@@ -25,6 +26,7 @@ export function Form({ children }: { children: React.ReactNode }) {
 
     await api.post('send', { json: { subject, title, message, contactsId } })
 
+    mutate('/email/list')
     router.back()
   }
 

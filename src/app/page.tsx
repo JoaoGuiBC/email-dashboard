@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 import { Contacts } from './_contacts-section'
+import { Emails } from './_emails-section'
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
       <main className="row-span-9 grid grid-cols-7 grid-rows-1 gap-4">
         <Contacts />
         <section className="col-span-3">middle</section>
-        <section className="col-span-2">right</section>
+        <Emails />
       </main>
     </div>
   )

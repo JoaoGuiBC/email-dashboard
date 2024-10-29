@@ -36,3 +36,29 @@ model ContactCategory {
 
   @@map("contact_categories")
 }
+
+model Email {
+  id                 String @id
+  subject            String
+  numberOfRecipients Int    @map("number_of_recipients")
+  numberOfViews      Int    @default(0) @map("number_of_views")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  answers EmailAnswer[]
+
+  @@map("emails")
+}
+
+model EmailAnswer {
+  id                  String  @id @default(cuid())
+  recipient           String
+  text                String
+  isAPositiveFeedback Boolean @map("is_a_positive_feedback")
+
+  emailId String? @map("email_id")
+  Email   Email?  @relation(fields: [emailId], references: [id])
+
+  @@map("emails_answers")
+}

@@ -27,16 +27,20 @@ export async function POST(request: Request) {
 
   const emails = contacts.map((contact) => contact.email)
 
-  const { error } = await resend.emails.send({
+  const { error, data } = await resend.emails.send({
     from: `E-mail Dashboard <${env.EMAIL_SENDER}>`,
     to: emails,
     subject,
     react: EmailTemplate({ title, message }),
   })
 
-  if (error) {
+  if (error || !data) {
     return Response.json(error, { status: 400 })
   }
+
+  await prisma.email.create({
+    data: { id: data.id, numberOfRecipients: contacts.length, subject },
+  })
 
   return Response.json(
     { message: 'E-mail enviado com sucesso' },
